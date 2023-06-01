@@ -80,35 +80,55 @@ class HomeScreen extends StatelessWidget {
                 child: ListView.builder(
                     itemCount: stories.length,
                     scrollDirection: Axis.horizontal,
-                    padding: EdgeInsets.fromLTRB(32, 0, 32, 0),
+                    padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
                     itemBuilder: (context, index) {
                       final story = stories[index];
 
                       return Container(
-                        margin: EdgeInsets.fromLTRB(4, 0, 4, 0),
+                        margin: const EdgeInsets.fromLTRB(4, 0, 4, 0),
                         child: Column(
                           children: [
-                            Container(
-                              width: 68,
-                              height: 68,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(24),
-                                gradient: const LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    colors: [
-                                      Color(0xff376AED),
-                                      Color(0xff49B0E2),
-                                      Color(0xff9CECFB),
-                                    ]),
-                              ),
-                              child: Container(
-                                margin: EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20)),
-                              ),
+                            Stack(
+                              children: [
+                                Container(
+                                  width: 68,
+                                  height: 68,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(24),
+                                    gradient: const LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        colors: [
+                                          Color(0xff376AED),
+                                          Color(0xff49B0E2),
+                                          Color(0xff9CECFB),
+                                        ]),
+                                  ),
+                                  child: Container(
+                                    margin: const EdgeInsets.all(3),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    padding: const EdgeInsets.all(4),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(16),
+                                      child: Image.asset(
+                                          'assets/img/stories/${story.imageFileName}'),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: Image.asset(
+                                    'assets/img/icons/${story.iconFileName}',
+                                    height: 24,
+                                    width: 24,
+                                  ),
+                                )
+                              ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 8,
                             ),
                             Text(story.name),
