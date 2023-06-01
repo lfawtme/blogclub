@@ -1,3 +1,4 @@
+import 'package:blogclub/data.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -7,7 +8,6 @@ void main() {
 class MyApp extends StatelessWidget {
   static const defaultFontFamily = 'Avenir';
   const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -16,26 +16,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
         textTheme: TextTheme(
-          subtitle1: TextStyle(
-            fontFamily: defaultFontFamily,
-            color: secondTextColor,
-          ),
-          headline6: TextStyle(
+            subtitle1: TextStyle(
               fontFamily: defaultFontFamily,
-              fontWeight: FontWeight.bold,
-              color: primaryTextColor),
-        ),
+              color: secondTextColor,
+              fontSize: 14,
+            ),
+            headline6: TextStyle(
+                fontFamily: defaultFontFamily,
+                fontWeight: FontWeight.bold,
+                color: primaryTextColor),
+            bodyText2: TextStyle(
+                fontFamily: defaultFontFamily,
+                color: secondTextColor,
+                fontSize: 14)),
       ),
       home: const HomeScreen(),
     );
@@ -47,6 +42,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+    final stories = AppDatabase.stories;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -60,7 +57,7 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     Text(
                       'Hi, Fateme!',
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: themeData.textTheme.subtitle1,
                     ),
                     Image.asset(
                       'assets/img/icons/notification.png',
@@ -74,9 +71,52 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(32, 0, 0, 24),
                 child: Text(
                   'Explore today’s',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: themeData.textTheme.headline6,
                 ),
               ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: 100,
+                child: ListView.builder(
+                    itemCount: stories.length,
+                    scrollDirection: Axis.horizontal,
+                    padding: EdgeInsets.fromLTRB(32, 0, 32, 0),
+                    itemBuilder: (context, index) {
+                      final story = stories[index];
+
+                      return Container(
+                        margin: EdgeInsets.fromLTRB(4, 0, 4, 0),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 68,
+                              height: 68,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(24),
+                                gradient: const LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    colors: [
+                                      Color(0xff376AED),
+                                      Color(0xff49B0E2),
+                                      Color(0xff9CECFB),
+                                    ]),
+                              ),
+                              child: Container(
+                                margin: EdgeInsets.all(3),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20)),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(story.name),
+                          ],
+                        ),
+                      );
+                    }),
+              )
             ],
           ),
         ),
