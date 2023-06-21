@@ -1,3 +1,4 @@
+import 'package:blogclub/carousel/carousel_slider.dart';
 import 'package:blogclub/data.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -81,11 +82,86 @@ class HomeScreen extends StatelessWidget {
                   style: themeData.textTheme.headline4,
                 ),
               ),
-              _StoryList(stories: stories)
+              _StoryList(stories: stories),
+              _CategoryList(),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _CategoryList extends StatelessWidget {
+  const _CategoryList({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final categories = AppDatabase.categories;
+    return CarouselSlider.builder(
+        itemCount: categories.length,
+        itemBuilder: (context, index, readIndex) {
+          return _CategoryItem(
+            category: categories[readIndex],
+          );
+        },
+        options: CarouselOptions(
+            scrollDirection: Axis.horizontal,
+            viewportFraction: 0.8,
+            aspectRatio: 1.2,
+            initialPage: 0,
+            disableCenter: true,
+            enableInfiniteScroll: false));
+  }
+}
+
+class _CategoryItem extends StatelessWidget {
+  final Category category;
+  const _CategoryItem({
+    super.key,
+    required this.category,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          margin: EdgeInsets.all(8),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(32),
+            child: Image.asset(
+              'assets/img/posts/large/${category.imageFileName}',
+              fit: BoxFit.cover,
+            ),
+          ),
+          foregroundDecoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(32),
+            gradient: LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.center,
+                colors: [
+                  Color(0xff0D253C),
+                  Colors.transparent,
+                ]),
+          ),
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: BorderRadius.circular(32),
+          ),
+        ),
+        Positioned(
+          bottom: 48,
+          left: 48,
+          child: Text(category.title,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6!
+                  .apply(color: Colors.white)),
+        )
+      ],
     );
   }
 }
