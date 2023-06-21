@@ -29,7 +29,8 @@ class MyApp extends StatelessWidget {
             headline6: TextStyle(
                 fontFamily: defaultFontFamily,
                 fontWeight: FontWeight.bold,
-                color: primaryTextColor),
+                color: primaryTextColor,
+                fontSize: 18),
             headline4: TextStyle(
                 fontFamily: defaultFontFamily,
                 fontSize: 24,
@@ -83,7 +84,10 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               _StoryList(stories: stories),
-              _CategoryList(),
+              const SizedBox(
+                height: 16,
+              ),
+              const _CategoryList(),
             ],
           ),
         ),
@@ -105,6 +109,8 @@ class _CategoryList extends StatelessWidget {
         itemBuilder: (context, index, readIndex) {
           return _CategoryItem(
             category: categories[readIndex],
+            left: readIndex == 0 ? 32 : 8,
+            right: readIndex == categories.length - 1 ? 32 : 8,
           );
         },
         options: CarouselOptions(
@@ -113,55 +119,77 @@ class _CategoryList extends StatelessWidget {
             aspectRatio: 1.2,
             initialPage: 0,
             disableCenter: true,
-            enableInfiniteScroll: false));
+            enlargeCenterPage: true,
+            enableInfiniteScroll: false,
+            scrollPhysics: const BouncingScrollPhysics(),
+            enlargeStrategy: CenterPageEnlargeStrategy.height));
   }
 }
 
 class _CategoryItem extends StatelessWidget {
   final Category category;
+  final double left;
+  final double right;
   const _CategoryItem({
     super.key,
     required this.category,
+    required this.left,
+    required this.right,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          margin: EdgeInsets.all(8),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(32),
-            child: Image.asset(
-              'assets/img/posts/large/${category.imageFileName}',
-              fit: BoxFit.cover,
+    return Container(
+      margin: EdgeInsets.fromLTRB(left, 0, right, 0),
+      child: Stack(
+        children: [
+          Positioned.fill(
+              top: 100,
+              left: 65,
+              right: 65,
+              bottom: 24,
+              child: Container(
+                decoration: const BoxDecoration(boxShadow: [
+                  BoxShadow(blurRadius: 20, color: Color(0xaa0D253C))
+                ]),
+              )),
+          Positioned.fill(
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 16),
+              foregroundDecoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(32),
+                gradient: const LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.center,
+                    colors: [
+                      Color(0xff0D253C),
+                      Colors.transparent,
+                    ]),
+              ),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(32),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(32),
+                child: Image.asset(
+                  'assets/img/posts/large/${category.imageFileName}',
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           ),
-          foregroundDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(32),
-            gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.center,
-                colors: [
-                  Color(0xff0D253C),
-                  Colors.transparent,
-                ]),
-          ),
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: BorderRadius.circular(32),
-          ),
-        ),
-        Positioned(
-          bottom: 48,
-          left: 48,
-          child: Text(category.title,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6!
-                  .apply(color: Colors.white)),
-        )
-      ],
+          Positioned(
+            bottom: 48,
+            left: 42,
+            child: Text(category.title,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6!
+                    .apply(color: Colors.white)),
+          )
+        ],
+      ),
     );
   }
 }
