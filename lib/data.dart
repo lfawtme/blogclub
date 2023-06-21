@@ -47,13 +47,13 @@ class AppDatabase {
       StoryData(
           id: 1001,
           name: 'Emilia',
-          imageFileName: 'story_1.jpg',
+          imageFileName: 'story_9.jpg',
           iconFileName: 'category_1.png',
           isViewed: false),
       StoryData(
           id: 1002,
           name: 'Richard',
-          imageFileName: 'story_8.jpg',
+          imageFileName: 'story_10.jpg',
           iconFileName: 'category_2.png',
           isViewed: false),
       StoryData(
