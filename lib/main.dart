@@ -18,6 +18,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        textButtonTheme: TextButtonThemeData(
+            style: ButtonStyle(
+                textStyle: MaterialStateProperty.all(TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          fontFamily: defaultFontFamily,
+        )))),
         primarySwatch: Colors.blue,
         textTheme: TextTheme(
             subtitle1: TextStyle(
@@ -36,6 +43,12 @@ class MyApp extends StatelessWidget {
                 fontSize: 24,
                 fontWeight: FontWeight.w700,
                 color: primaryTextColor),
+            headline5: TextStyle(
+              fontFamily: defaultFontFamily,
+              fontSize: 20,
+              color: primaryTextColor,
+              fontWeight: FontWeight.w700,
+            ),
             bodyText2: TextStyle(
                 fontFamily: defaultFontFamily,
                 color: secondTextColor,
@@ -88,6 +101,7 @@ class HomeScreen extends StatelessWidget {
                 height: 16,
               ),
               const _CategoryList(),
+              const _PostList(),
             ],
           ),
         ),
@@ -307,6 +321,34 @@ class _Story extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(17),
       child: Image.asset('assets/img/stories/${story.imageFileName}'),
+    );
+  }
+}
+
+class _PostList extends StatelessWidget {
+  const _PostList({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 32, right: 24),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Lastet News',
+                style: Theme.of(context).textTheme.headline5,
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Text('More'),
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }
