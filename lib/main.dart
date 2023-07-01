@@ -77,6 +77,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -110,6 +111,9 @@ class HomeScreen extends StatelessWidget {
               ),
               const _CategoryList(),
               const _PostList(),
+              SizedBox(
+                height: 32,
+              ),
             ],
           ),
         ),
@@ -311,10 +315,10 @@ class _Story extends StatelessWidget {
       child: DottedBorder(
         borderType: BorderType.RRect,
         strokeWidth: 2,
-        radius: Radius.circular(24),
+        radius: const Radius.circular(24),
         color: const Color(0xff7B8BB2),
         dashPattern: const [8, 3],
-        padding: EdgeInsets.all(7),
+        padding: const EdgeInsets.all(7),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
@@ -341,7 +345,7 @@ class _PostList extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 32, right: 24),
+          padding: const EdgeInsets.only(left: 32, right: 16),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -364,6 +368,7 @@ class _PostList extends StatelessWidget {
             itemCount: posts.length,
             itemExtent: 141,
             shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
             itemBuilder: (context, index) {
               final post = posts[index];
               return _Post(post: post);
@@ -401,56 +406,70 @@ class _Post extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               child:
                   Image.asset('assets/img/posts/small/${post.imageFileName}')),
-          SizedBox(width: 16),
           Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  post.caption,
-                  style: const TextStyle(
-                    fontFamily: MyApp.defaultFontFamily,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
-                    color: Color(0xff376AED),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    post.caption,
+                    style: const TextStyle(
+                      fontFamily: MyApp.defaultFontFamily,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      color: Color(0xff376AED),
+                    ),
                   ),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  post.title,
-                  style: Theme.of(context).textTheme.subtitle2,
-                ),
-                SizedBox(height: 16),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Icon(
-                      CupertinoIcons.hand_thumbsup,
-                      size: 16,
-                      color: Theme.of(context).textTheme.bodyText2!.color,
-                    ),
-                    SizedBox(
-                      width: 4,
-                    ),
-                    Text(post.likes,
-                        style: Theme.of(context).textTheme.bodyText2!),
-                    SizedBox(
-                      width: 16,
-                    ),
-                    Icon(
-                      CupertinoIcons.clock,
-                      size: 16,
-                      color: Theme.of(context).textTheme.bodyText2!.color,
-                    ),
-                    SizedBox(
-                      width: 4,
-                    ),
-                    Text(post.time,
-                        style: Theme.of(context).textTheme.bodyText2!),
-                  ],
-                )
-              ],
+                  const SizedBox(height: 8),
+                  Text(
+                    post.title,
+                    style: Theme.of(context).textTheme.subtitle2,
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Icon(
+                        CupertinoIcons.hand_thumbsup,
+                        size: 16,
+                        color: Theme.of(context).textTheme.bodyText2!.color,
+                      ),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      Text(post.likes,
+                          style: Theme.of(context).textTheme.bodyText2!),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Icon(
+                        CupertinoIcons.clock,
+                        size: 16,
+                        color: Theme.of(context).textTheme.bodyText2!.color,
+                      ),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      Text(post.time,
+                          style: Theme.of(context).textTheme.bodyText2!),
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.centerRight,
+                          child: Icon(
+                            post.isBookmarked
+                                ? CupertinoIcons.bookmark_fill
+                                : CupertinoIcons.bookmark,
+                            size: 16,
+                            color: Theme.of(context).textTheme.bodyText2!.color,
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
           )
         ],
