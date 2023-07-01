@@ -1,5 +1,6 @@
 import 'package:blogclub/carousel/carousel_slider.dart';
 import 'package:blogclub/data.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 
@@ -13,8 +14,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final primaryTextColor = Color(0xff0D253C);
-    final secondTextColor = Color(0xff2D4379);
+    const primaryTextColor = Color(0xff0D253C);
+    const secondTextColor = Color(0xff2D4379);
+    const primaryColor = Color(0xff376AED);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -26,12 +28,18 @@ class MyApp extends StatelessWidget {
           fontFamily: defaultFontFamily,
         )))),
         primarySwatch: Colors.blue,
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
             subtitle1: TextStyle(
               fontFamily: defaultFontFamily,
               color: secondTextColor,
               fontWeight: FontWeight.w200,
               fontSize: 18,
+            ),
+            subtitle2: TextStyle(
+              fontFamily: defaultFontFamily,
+              color: primaryTextColor,
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
             ),
             headline6: TextStyle(
                 fontFamily: defaultFontFamily,
@@ -329,6 +337,7 @@ class _PostList extends StatelessWidget {
   const _PostList({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final posts = AppDatabase.posts;
     return Column(
       children: [
         Padding(
@@ -343,12 +352,109 @@ class _PostList extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {},
-                child: Text('More'),
+                child: const Text(
+                  'More',
+                  style: TextStyle(color: Color(0xff376AED)),
+                ),
               ),
             ],
           ),
-        )
+        ),
+        ListView.builder(
+            itemCount: posts.length,
+            itemExtent: 141,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              final post = posts[index];
+              return _Post(post: post);
+            }),
       ],
+    );
+  }
+}
+
+class _Post extends StatelessWidget {
+  const _Post({
+    super.key,
+    required this.post,
+  });
+
+  final PostData post;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(32, 8, 32, 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: const [
+          BoxShadow(
+            blurRadius: 10,
+            color: Color(0x1a5282ff),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child:
+                  Image.asset('assets/img/posts/small/${post.imageFileName}')),
+          SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  post.caption,
+                  style: const TextStyle(
+                    fontFamily: MyApp.defaultFontFamily,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    color: Color(0xff376AED),
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  post.title,
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
+                SizedBox(height: 16),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Icon(
+                      CupertinoIcons.hand_thumbsup,
+                      size: 16,
+                      color: Theme.of(context).textTheme.bodyText2!.color,
+                    ),
+                    SizedBox(
+                      width: 4,
+                    ),
+                    Text(post.likes,
+                        style: Theme.of(context).textTheme.bodyText2!),
+                    SizedBox(
+                      width: 16,
+                    ),
+                    Icon(
+                      CupertinoIcons.clock,
+                      size: 16,
+                      color: Theme.of(context).textTheme.bodyText2!.color,
+                    ),
+                    SizedBox(
+                      width: 4,
+                    ),
+                    Text(post.time,
+                        style: Theme.of(context).textTheme.bodyText2!),
+                  ],
+                )
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
