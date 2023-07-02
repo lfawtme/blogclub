@@ -37,7 +37,14 @@ class MyApp extends StatelessWidget {
           fontWeight: FontWeight.w400,
           fontFamily: FontFamily.avenir,
         )))),
-        primarySwatch: Colors.blue,
+        colorScheme: const ColorScheme.light(
+          primary: primaryColor,
+          onPrimary: Colors.white,
+          background: Color(0xffFBFCFF),
+          surface: Colors.white,
+          onSurface: primaryTextColor,
+          onBackground: primaryTextColor,
+        ),
         textTheme: const TextTheme(
             subtitle1: TextStyle(
               fontFamily: FontFamily.avenir,
