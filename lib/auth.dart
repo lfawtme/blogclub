@@ -31,15 +31,71 @@ class AuthScreen extends StatelessWidget{
                 ),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text('Login'.toUpperCase(),style: tabTextStyle,),
-                        Text('Sign Up'.toUpperCase(),style: tabTextStyle),
-                      ],
+                    SizedBox(
+                      height: 60,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text('Login'.toUpperCase(),style: tabTextStyle,),
+                          Text('Sign Up'.toUpperCase(),style: tabTextStyle),
+                        ],
+                      ),
+                    ),
+                    Expanded(child: Container(
+                      decoration: BoxDecoration(
+                        color: themeData.colorScheme.surface,
+                        borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(32),
+                    topRight: Radius.circular(32),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(32),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                           Text('Welcome Back',style: themeData.textTheme.headline4,),
+                           const SizedBox(height: 8,),
+                           Text('Sign in with your account',
+                           style: themeData.textTheme.subtitle1!.apply(fontSizeFactor: 0.8),),
+                           const SizedBox(height: 16,),
+                           TextField(
+                            decoration: InputDecoration(label: const Text('Username'),
+                            labelStyle: TextStyle(
+                              color: themeData.colorScheme.onSurface,
+                            )),
+                          ),
+                          TextField(
+                            obscureText: true,
+                            enableSuggestions: false,
+                            autocorrect: false,
+                            decoration: InputDecoration(
+                            label: const Text('Password'),labelStyle: TextStyle(
+                              color: themeData.colorScheme.onSurface,
+                            )),),
+                          ElevatedButton(onPressed: (){}
+                          , child: Text('Login'.toLowerCase())),
+                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                           const Text('Forgert your Password ?'),
+                           TextButton(onPressed: (){ }, child:const Text('Reset here'),),
+                      ],),
+                      const Center(
+                        child: Text('OR SIGN IN WITH'),
+                      ),
+                      Row(
+                        children: [
+                          Assets.img.icons.google.image(),
+                          Assets.img.icons.facebook.image(),
+                          Assets.img.icons.twitter.image(),
+                        ],
+                      )
+                                      ]),
+                    ),
                     )
-                  ],
-                ),
+                    )
+          ]),
               ),
             ),
           ],
