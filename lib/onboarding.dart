@@ -1,6 +1,6 @@
+import 'package:blogclub/auth.dart';
 import 'package:blogclub/data.dart';
 import 'package:blogclub/gen/assets.gen.dart';
-import 'package:blogclub/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -70,10 +70,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(items[index].title,
-                          style: themeData.textTheme.headline4,),
-                          SizedBox(height: 16,),
+                          style: themeData.textTheme.headlineMedium,),
+                          const SizedBox(height: 16,),
                           Text(items[index].description,
-                          style: themeData.textTheme.subtitle1!.apply(fontSizeFactor: 0.9),),
+                          style: themeData.textTheme.titleMedium!.apply(fontSizeFactor: 0.9),),
                         ],
                       ),
                     );
@@ -97,10 +97,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       onPressed: (){
                         if (page==items.length-1){
                           Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context)=>const HomeScreen())
-                          );
-                        } else {
-                          _pageController.animateToPage(page+1, duration: Duration(milliseconds: 500), curve: Curves.decelerate);
+                            MaterialPageRoute(
+                            builder: (context)=>
+                            const AuthScreen()));
+                        }
+                         else {
+                          _pageController.animateToPage(page + 1, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
                         }
                       },
                       style: 
