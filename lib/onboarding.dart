@@ -70,10 +70,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(items[index].title,
-                          style: themeData.textTheme.headline5,),
-                          SizedBox(height: 24,),
+                          style: themeData.textTheme.headline4,),
+                          SizedBox(height: 16,),
                           Text(items[index].description,
-                          style: themeData.textTheme.subtitle1!.apply(fontSizeFactor: 0.8),),
+                          style: themeData.textTheme.subtitle1!.apply(fontSizeFactor: 0.9),),
                         ],
                       ),
                     );
