@@ -1,12 +1,6 @@
-import 'package:blogclub/carousel/carousel_slider.dart';
-import 'package:blogclub/data.dart';
-import 'package:blogclub/gen/assets.gen.dart';
 import 'package:blogclub/gen/fonts.gen.dart';
-import 'package:blogclub/home.dart';
 import 'package:blogclub/splash.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/services.dart';
 
 
@@ -115,9 +109,9 @@ class _BottomNavigation extends StatelessWidget {
                     blurRadius: 20,
                     color: const Color(0xff2D2D2D).withOpacity(0.3)),
               ]),
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
+                children: [
                   BottomNavigationItems(
                       iconFileName: 'Home.png',
                       activeIconFileName: 'Home.png',
