@@ -49,15 +49,15 @@ class AuthScreen extends StatelessWidget{
                     topRight: Radius.circular(32),
                       ),
                     ),
-                    child: Padding(
+                    child: SingleChildScrollView(
                       padding: const EdgeInsets.all(32),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                           Text('Welcome Back',style: themeData.textTheme.headline4,),
+                           Text('Welcome Back',style: themeData.textTheme.headlineMedium,),
                            const SizedBox(height: 8,),
                            Text('Sign in with your account',
-                           style: themeData.textTheme.subtitle1!.apply(fontSizeFactor: 0.8),),
+                           style: themeData.textTheme.titleMedium!.apply(fontSizeFactor: 0.8),),
                            const SizedBox(height: 16,),
                            TextField(
                             decoration: InputDecoration(label: const Text('Username'),
@@ -70,32 +70,47 @@ class AuthScreen extends StatelessWidget{
                             enableSuggestions: false,
                             autocorrect: false,
                             decoration: InputDecoration(
-                            label: const Text('Password'),labelStyle: TextStyle(
-                              color: themeData.colorScheme.onSurface,
-                            )),),
-                          ElevatedButton(onPressed: (){}
-                          , child: Text('Login'.toLowerCase())),
-                       Row(
+                            label: const Text('Password'),
+                            suffixIcon: TextButton(style: const ButtonStyle(
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+                              onPressed: (){},
+                              child: const Text('Show'),
+                            ),),
+                            ),
+                            const SizedBox(height: 24,),
+                          ElevatedButton(onPressed: (){}, 
+                          style: ButtonStyle(minimumSize:
+                           MaterialStateProperty.all(Size(MediaQuery.of(context).size.width,60),
+                           ),
+                           shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(borderRadius:BorderRadius.circular(12) ),)
+                           ),
+                           child: Text('Login'.toUpperCase())),
+                          Row(
+                         mainAxisAlignment: MainAxisAlignment.center,
+                         children: [
+                            const Text('Forgert your Password ?'),
+                            const SizedBox(width: 8,),
+                            TextButton(onPressed: (){}, child:const Text('Reset here'),),
+                           ],),
+                      const Center(
+                        child: Text('OR SIGN IN WITH',style: TextStyle(letterSpacing: 2),),
+                      ),
+                      const SizedBox(height: 16,),
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                           const Text('Forgert your Password ?'),
-                           TextButton(onPressed: (){ }, child:const Text('Reset here'),),
-                      ],),
-                      const Center(
-                        child: Text('OR SIGN IN WITH'),
-                      ),
-                      Row(
-                        children: [
-                          Assets.img.icons.google.image(),
-                          Assets.img.icons.facebook.image(),
-                          Assets.img.icons.twitter.image(),
+                          Assets.img.icons.google.image(width:36,height: 36, ),
+                          const SizedBox(width: 24,),
+                          Assets.img.icons.facebook.image(width:36,height: 36,),
+                          const SizedBox(width: 24,),
+                          Assets.img.icons.twitter.image(width:36,height: 36,),
                         ],
                       )
-                                      ]),
+                   ], ),
                     ),
-                    )
-                    )
-          ]),
+                    ),)
+          ],),
               ),
             ),
           ],
