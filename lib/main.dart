@@ -1,5 +1,5 @@
+import 'package:blogclub/article.dart';
 import 'package:blogclub/gen/fonts.gen.dart';
-import 'package:blogclub/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -39,9 +39,17 @@ class MyApp extends StatelessWidget {
           background: Color(0xffFBFCFF),
           surface: Colors.white,
           onSurface: primaryTextColor,
-          onBackground: primaryTextColor,
-        ),
+          onBackground: primaryTextColor,  ),
+          appBarTheme: const AppBarTheme(
+            titleSpacing: 32,
+            color: Colors.white,
+            foregroundColor: primaryTextColor,
+            elevation: 0),
+            snackBarTheme: const SnackBarThemeData(
+              backgroundColor: primaryColor,
+            ),
         textTheme: const TextTheme(
+
             titleMedium: TextStyle(
               fontFamily: FontFamily.avenir,
               color: secondTextColor,
@@ -86,7 +94,7 @@ class MyApp extends StatelessWidget {
       //     Positioned(bottom: 0, right: 0, left: 0, child: _BottomNavigation())
       //   ],
       // ),
-      home: const SplashScreen(),
+      home: const ArticleScreen(),
     );
   }
 }
